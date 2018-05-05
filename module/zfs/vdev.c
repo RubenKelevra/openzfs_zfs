@@ -51,7 +51,7 @@
 #include <sys/abd.h>
 #include <sys/zvol.h>
 #include <sys/zfs_ratelimit.h>
-#include <sys/compress_auto.h>
+#include <sys/compress_adaptive.h>
 
 /*
  * When a vdev is added, it will be divided into approximately (but no

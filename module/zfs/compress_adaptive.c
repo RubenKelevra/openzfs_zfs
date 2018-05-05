@@ -19,12 +19,12 @@
  * CDDL HEADER END
  */
 
-#include <sys/compress_auto.h>
+#include <sys/compress_adaptive.h>
 #include <sys/zio_compress.h>
 #include <sys/spa_impl.h>
 #include <sys/vdev_impl.h>
 
-enum zio_compress ac_compress[COMPRESS_AUTO_LEVELS] = {
+enum zio_compress ac_compress[COMPRESS_ADAPTIVE_LEVELS] = {
 	ZIO_COMPRESS_EMPTY,
 	ZIO_COMPRESS_LZ4,
 	ZIO_COMPRESS_GZIP_1};
@@ -121,18 +121,18 @@ void compress_update_pio(uint64_t compressBps, uint8_t compress_level,
 {
 	int n = 10;
 	compress_calc_avg_without_zero(compressBps,
-	    &pio->io_compress_auto_Bps[compress_level], n);
+	    &pio->io_compress_adaptive_Bps[compress_level], n);
 
-	if (pio->io_compress_auto_exploring) {
-		pio->io_compress_auto_exploring = B_FALSE;
+	if (pio->io_compress_adaptive_exploring) {
+		pio->io_compress_adaptive_exploring = B_FALSE;
 	} else {
 		pio->io_compress_level = compress_level;
 	}
 }
 
 uint64_t compress_get_faster_level(uint64_t lsize, uint8_t level, uint64_t available_queue_delay, zio_t *pio) {
-	if (level < COMPRESS_AUTO_LEVELS - 1) {
-		uint64_t fasterBps = pio->io_compress_auto_Bps[level + 1];
+	if (level < COMPRESS_ADAPTIVE_LEVELS - 1) {
+		uint64_t fasterBps = pio->io_compress_adaptive_Bps[level + 1];
 
 		if (fasterBps != 0) {
 
@@ -143,8 +143,8 @@ uint64_t compress_get_faster_level(uint64_t lsize, uint8_t level, uint64_t avail
 				level++;
 			}
 
-		} else if (pio->io_compress_auto_exploring == B_FALSE) {
-			pio->io_compress_auto_exploring = B_TRUE;
+		} else if (pio->io_compress_adaptive_exploring == B_FALSE) {
+			pio->io_compress_adaptive_exploring = B_TRUE;
 			level++;
 		}
 	}
@@ -159,7 +159,7 @@ uint64_t compress_get_slower_level(uint64_t lsize, uint8_t level,
 		if (level > 0) {
 			level--;
 			required_queue_delay = compress_calc_delay(lsize,
-				pio->io_compress_auto_Bps[level]);
+				pio->io_compress_adaptive_Bps[level]);
 		} else {
 			break;
 		}
@@ -174,13 +174,13 @@ uint64_t compress_get_optimal_level(uint64_t lsize, vdev_t *rvd, zio_t *pio)
 	uint64_t required_queue_delay;
 	uint64_t level = pio->io_compress_level;
 
-	if (pio->io_compress_auto_Bps[level] == 0) {
+	if (pio->io_compress_adaptive_Bps[level] == 0) {
 		return level;
 	}
 
 	available_queue_delay = compress_min_queue_delay(lsize, rvd);
 	required_queue_delay = compress_calc_delay(lsize,
-		pio->io_compress_auto_Bps[level]);
+		pio->io_compress_adaptive_Bps[level]);
 
 
 	if ( required_queue_delay < available_queue_delay ) {
@@ -195,7 +195,7 @@ uint64_t compress_get_optimal_level(uint64_t lsize, vdev_t *rvd, zio_t *pio)
 }
 
 
-size_t compress_auto(zio_t *zio, abd_t *src, void *dst, size_t s_len,
+size_t compress_adaptive(zio_t *zio, abd_t *src, void *dst, size_t s_len,
     enum zio_compress *c)
 {
 	size_t psize;

@@ -38,7 +38,7 @@
 #include <sys/avl.h>
 #include <sys/fs/zfs.h>
 #include <sys/zio_impl.h>
-#include <sys/compress_auto.h>
+#include <sys/compress_adaptive.h>
 
 #ifdef	__cplusplus
 extern "C" {
@@ -518,8 +518,8 @@ struct zio {
 
 	uint8_t		io_compress_level; //stored in pio
 
-	boolean_t	io_compress_auto_exploring; //stored in pio
-	uint64_t	io_compress_auto_Bps[COMPRESS_AUTO_LEVELS];
+	boolean_t	io_compress_adaptive_exploring; //stored in pio
+	uint64_t	io_compress_adaptive_Bps[COMPRESS_ADAPTIVE_LEVELS];
 };
 
 extern int zio_bookmark_compare(const void *, const void *);
