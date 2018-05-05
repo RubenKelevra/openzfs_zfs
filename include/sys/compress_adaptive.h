@@ -22,7 +22,7 @@
 #ifndef _SYS_ADAPTIVE_COMPRESS_H
 #define	_SYS_ADAPTIVE_COMPRESS_H
 
-#define	COMPRESS_ADAPTIVE_LEVELS 11
+#define	COMPRESS_ADAPTIVE_LEVELS 10
 
 #include <sys/spa.h>
 #include <sys/zio.h>

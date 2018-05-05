@@ -25,7 +25,6 @@
 #include <sys/vdev_impl.h>
 
 enum zio_compress ac_compress[COMPRESS_ADAPTIVE_LEVELS] = {
-	ZIO_COMPRESS_EMPTY,
 	ZIO_COMPRESS_LZ4,
 	ZIO_COMPRESS_GZIP_1,
 	ZIO_COMPRESS_GZIP_2,
