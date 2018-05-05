@@ -252,7 +252,7 @@ on systems without support for the \fBlz4_compress\fR feature. Booting
 off of \fBlz4\fR-compressed root pools is supported.
 
 This feature becomes \fBactive\fR as soon as it is enabled and will
-never return to being \fBenabled\fB.
+never return to being \fBenabled\fR.
 .RE
 
 .sp
@@ -268,13 +268,13 @@ READ\-ONLY COMPATIBLE	yes
 DEPENDENCIES	lz4_compress,extensible_dataset
 .TE
 
-\fBcompress_adaptive\fR chooses the compression algorithm out lz4 and gzip[1-9] 
-to perform the optimal write throughput.
+\fBcompress_adaptive\fR chooses the compression algorithm out of lz4 and gzip[1-9] 
+to perform with optimal write throughput.
 
 When the \fBcompress_adaptive\fR feature is set to \fBenabled\fR, the
 administrator can turn on \fBcompress_adaptive\fR on any dataset on the
 pool using the \fBzfs\fR(8) command. Please note that doing so will
-immediately activate the \fB\fR feature on the underlying
+immediately activate the \fBcompress_adaptive\fR feature on the underlying
 pool.
 
 This feature becomes \fBactive\fR as soon as it is used on one dataset and will 
