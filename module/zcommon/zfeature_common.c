@@ -193,7 +193,7 @@ zpool_feature_init(void)
 	};
 	zfeature_register(SPA_FEATURE_COMPRESS_ADAPTIVE,
 	    "org.zfsonlinux:compress_adaptive", "compress_adaptive",
-	    "adaptive compression algorithm support.",
+	    "adaptive compression algorithm selection support.",
 	    ZFEATURE_FLAG_PER_DATASET | ZFEATURE_FLAG_READONLY_COMPAT,
 	    compress_adaptive_deps);
 	}
