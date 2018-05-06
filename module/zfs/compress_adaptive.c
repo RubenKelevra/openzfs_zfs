@@ -49,14 +49,12 @@ void compress_set_default_algorithm(enum zio_compress *c)
 
 uint64_t compress_calc_delay(uint64_t byte, uint64_t byte_per_second)
 {
-	uint64_t transform = 1000 * 1000 * 1000;
-	return ((byte * transform) / byte_per_second);
+	return ((byte * 1000000000) / byte_per_second);
 }
 
 uint64_t compress_calc_Bps(uint64_t byte, hrtime_t delay)
 {
-	uint64_t transform = 1000 * 1000 * 1000;
-	return ((byte * transform) / delay);
+	return ((byte * 1000000000) / delay);
 }
 
 void compress_calc_avg_without_zero(uint64_t act, uint64_t *res, int n)
@@ -84,10 +82,10 @@ uint64_t compress_vdev_queue_delay(uint64_t size, vdev_t *vd)
 	    vd->vdev_queue.vq_class[ZIO_PRIORITY_ASYNC_WRITE].vqc_queued_size;
 
 	uint32_t max_queue_depth = zfs_vdev_async_write_max_active *
-				    zfs_vdev_queue_depth_pct / 100;
+				    zfs_vdev_queue_depth_pct / 50;
 	/*
-	 * keep at least 25 ZIOs in queue * compression factor about 2
-	 * = average 50
+	 * keep at least 10 ZIOs in queue * compression factor about 2
+	 * = average 25
 	 */
 	uint64_t queue_offset = size * (max_queue_depth / 4);
 	if (vd_queued_size_write >= queue_offset) {
