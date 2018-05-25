@@ -4249,7 +4249,8 @@ dsl_dataset_actv_compress_adaptive_check(void *arg, dmu_tx_t *tx)
 	if (error != 0)
 		return (error);
 
-	if (!spa_feature_is_enabled(dp->dp_spa, SPA_FEATURE_COMPRESS_ADAPTIVE)) {
+	if (!spa_feature_is_enabled(dp->dp_spa,
+	    SPA_FEATURE_COMPRESS_ADAPTIVE)) {
 		dsl_dataset_rele(ds, FTAG);
 		return (SET_ERROR(ENOTSUP));
 	}
@@ -4269,7 +4270,7 @@ dsl_dataset_actv_compress_adaptive_sync(void *arg, dmu_tx_t *tx)
 
 	if (!ds->ds_feature_inuse[SPA_FEATURE_COMPRESS_ADAPTIVE]) {
 		dsl_dataset_activate_feature(ds->ds_object,
-			SPA_FEATURE_COMPRESS_ADAPTIVE, tx);
+		    SPA_FEATURE_COMPRESS_ADAPTIVE, tx);
 		ds->ds_feature_inuse[SPA_FEATURE_COMPRESS_ADAPTIVE] = B_TRUE;
 	}
 	dsl_dataset_rele(ds, FTAG);

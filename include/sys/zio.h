@@ -516,9 +516,10 @@ struct zio {
 	/* Taskq dispatching state */
 	taskq_ent_t	io_tqent;
 
-	uint8_t		io_compress_level; //stored in pio
+	/* stored in pio */
+	uint8_t		io_compress_level;
+	boolean_t	io_compress_adaptive_exploring;
 
-	boolean_t	io_compress_adaptive_exploring; //stored in pio
 	uint64_t	io_compress_adaptive_Bps[COMPRESS_ADAPTIVE_LEVELS];
 };
 
