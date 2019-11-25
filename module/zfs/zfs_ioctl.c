@@ -2462,6 +2462,15 @@ zfs_prop_set_special(const char *dsname, zprop_source_t source,
 		if (err == 0)
 			err = -1;
 		break;
+	case ZFS_PROP_COMPRESSION:
+		if (intval == ZIO_COMPRESS_AUTO) {
+			err = dsl_dataset_activate_compress_auto(dsname);
+
+			if (err == 0)
+				err = -1;
+
+		}
+		break;
 	case ZFS_PROP_KEYLOCATION:
 		err = dsl_crypto_can_set_keylocation(dsname, strval);
 
@@ -4356,6 +4365,20 @@ zfs_check_settable(const char *dsname, nvpair_t *pair, cred_t *cr)
 
 				if (!spa_feature_is_enabled(spa,
 				    SPA_FEATURE_LZ4_COMPRESS)) {
+					spa_close(spa, FTAG);
+					return (SET_ERROR(ENOTSUP));
+				}
+				spa_close(spa, FTAG);
+			}
+
+			if (intval == ZIO_COMPRESS_AUTO) {
+				spa_t *spa;
+
+				if ((err = spa_open(dsname, &spa, FTAG)) != 0)
+					return (err);
+
+				if (!spa_feature_is_enabled(spa,
+				    SPA_FEATURE_COMPRESS_AUTO)) {
 					spa_close(spa, FTAG);
 					return (SET_ERROR(ENOTSUP));
 				}
