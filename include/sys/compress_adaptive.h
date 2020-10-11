@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  */
- 
+
 /*
  * Copyright (c) 2019, n1kl (bunge)
  */
