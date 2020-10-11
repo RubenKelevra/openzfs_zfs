@@ -28,6 +28,7 @@
  * Copyright 2017 Joyent, Inc.
  * Copyright (c) 2017, Intel Corporation.
  * Copyright (c) 2019, Datto Inc. All rights reserved.
+ * Copyright (c) 2019, n1kl (bunge)
  */
 
 #include <sys/zfs_context.h>

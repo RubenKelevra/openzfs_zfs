@@ -18,6 +18,10 @@
  *
  * CDDL HEADER END
  */
+ 
+/*
+ * Copyright (c) 2019, n1kl (bunge)
+ */
 
 #ifndef _SYS_ADAPTIVE_COMPRESS_H
 #define	_SYS_ADAPTIVE_COMPRESS_H

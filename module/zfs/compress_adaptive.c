@@ -20,6 +20,10 @@
  */
 
 /*
+ * Copyright (c) 2019, n1kl (bunge)
+ */
+
+/*
  * Overview:
  * If compression takes long then the disk remains idle. If compression is
  * faster than the writing speed of the disk then the CPU remains idle as
