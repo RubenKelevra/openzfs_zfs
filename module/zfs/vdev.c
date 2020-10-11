@@ -29,6 +29,7 @@
  * Copyright (c) 2017, Intel Corporation.
  * Copyright (c) 2019, Datto Inc. All rights reserved.
  * Copyright (c) 2019, n1kl (bunge)
+ * Copyright (c) 2019, RubenKelevra
  */
 
 #include <sys/zfs_context.h>
